@@ -42,7 +42,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Soenneker.Dtos.Email.Attachment" Version="3.0.17" />
+      <PackageReference Include="Soenneker.Dtos.Email.Attachment" Version="3.0.21" />
       <PackageReference Include="Soenneker.Enums.Email.Format" Version="3.0.18" />
       <PackageReference Include="Soenneker.Enums.Email.Priority" Version="3.0.20" />
     </ItemGroup>
