@@ -45,7 +45,7 @@
 
     <ItemGroup>
         <PackageReference Include="Soenneker.Dtos.Email.Attachment" Version="4.0.64" />
-        <PackageReference Include="Soenneker.Enums.Email.Format" Version="4.0.84" />
+        <PackageReference Include="Soenneker.Enums.Email.Format" Version="4.0.85" />
         <PackageReference Include="Soenneker.Enums.Email.Priority" Version="4.0.84" />
     </ItemGroup>
 </Project>
