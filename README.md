@@ -5,30 +5,51 @@
 
 # Soenneker.Dtos.Email
 
-A DTO type for email encapsulation.
+Defines a transport-friendly email envelope with recipients, sender details, content, priority, and attachments.
 
-## Install
+## Installation
 
 ```bash
 dotnet add package Soenneker.Dtos.Email
 ```
 
-## What you get
+## Usage
 
-- `EmailDto` — A DTO type for email encapsulation.
+```csharp
+using Soenneker.Dtos.Email;
+using Soenneker.Dtos.Email.Attachment;
+using Soenneker.Enums.Email.Format;
+using Soenneker.Enums.Email.Priority;
 
-## API at a glance
+var email = new EmailDto
+{
+    To = ["customer@example.com"],
+    Cc = ["account-owner@example.com"],
+    ReplyTo = "support@example.com",
+    Name = "Example Support",
+    Address = "support@example.com",
+    Subject = "Your receipt",
+    Body = "<p>Thanks for your order.</p>",
+    Format = EmailFormat.Html,
+    Priority = EmailPriority.Normal,
+    Attachments =
+    [
+        new EmailAttachmentDto
+        {
+            FileName = "receipt.pdf",
+            MimeType = "application/pdf",
+            Data = receiptBytes
+        }
+    ]
+};
+```
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `EmailDto.To` | Recipient email addresses. | Recipient email addresses. |
-| `EmailDto.Cc` | Carbon Copy recipients. | Carbon Copy recipients. |
-| `EmailDto.Bcc` | Blind Carbon Copy recipients. | Blind Carbon Copy recipients. |
-| `EmailDto.ReplyTo` | Reply-To email address. | Reply-To email address. |
-| `EmailDto.Name` | Sender's name. | Sender's name. |
-| `EmailDto.Address` | Sender's email address. | Sender's email address. |
-| `EmailDto.Subject` | Email subject. | Email subject. |
-| `EmailDto.Body` | Email body content. | Email body content. |
-| `EmailDto.Format` | Specifies whether the email is in plain text or HTML format. | Specifies whether the email is in plain text or HTML format. |
-| `EmailDto.Attachments` | Attachments as byte arrays. | Attachments as byte arrays. |
-| `EmailDto.Priority` | Email priority (Low, Normal, High). | Email priority (Low, Normal, High). |
+`Format` defaults to `EmailFormat.Html`; set `EmailFormat.Plaintext` for plain text. `Priority` defaults to `EmailPriority.Normal`, with `Low` and `High` also available.
+
+## JSON shape
+
+System.Text.Json property names are explicitly mapped to `to`, `cc`, `bcc`, `replyTo`, `name`, `address`, `subject`, `body`, `format`, `attachments`, and `priority`. Attachment `byte[]` data serializes as a base64 JSON string. Newtonsoft.Json naming follows the settings and contract resolver configured by the caller because this DTO declares only System.Text.Json attributes.
+
+Optional recipient lists, `ReplyTo`, and `Attachments` remain null unless assigned. `To`, `Name`, `Address`, `Subject`, and `Body` are not initialized by the parameterless constructor even though their C# types are non-nullable; populate them before sending or serialization.
+
+The DTO does not validate or normalize addresses, require recipients, sanitize HTML, encode plain text, infer MIME types, limit attachment size, or send the message. Treat untrusted HTML as unsafe until it has passed the application’s content policy, and enforce provider-specific recipient and attachment limits before dispatch.

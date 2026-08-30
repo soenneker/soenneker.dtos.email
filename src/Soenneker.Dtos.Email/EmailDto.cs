@@ -7,7 +7,7 @@ using Soenneker.Dtos.Email.Attachment;
 namespace Soenneker.Dtos.Email;
 
 /// <summary>
-/// A DTO type for email encapsulation
+/// Represents an email message envelope for transport between application components.
 /// </summary>
 public class EmailDto
 {
@@ -66,7 +66,7 @@ public class EmailDto
     public EmailFormat Format { get; set; } = EmailFormat.Html;
 
     /// <summary>
-    /// Attachments as byte arrays.
+    /// Attachments with file names, MIME types, and byte content.
     /// </summary>
     [JsonPropertyName("attachments")]
     public List<EmailAttachmentDto>? Attachments { get; set; }
