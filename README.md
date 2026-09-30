@@ -48,7 +48,6 @@ var email = new EmailDto
 
 ## JSON shape
 
-System.Text.Json property names are explicitly mapped to `to`, `cc`, `bcc`, `replyTo`, `name`, `address`, `subject`, `body`, `format`, `attachments`, and `priority`. Attachment `byte[]` data serializes as a base64 JSON string. Newtonsoft.Json naming follows the settings and contract resolver configured by the caller because this DTO declares only System.Text.Json attributes.
 
 Optional recipient lists, `ReplyTo`, and `Attachments` remain null unless assigned. `To`, `Name`, `Address`, `Subject`, and `Body` are not initialized by the parameterless constructor even though their C# types are non-nullable; populate them before sending or serialization.
 
